@@ -637,7 +637,7 @@ class FlxAnimate extends FlxSprite
 		anim._loadAtlas(animJson);
 		if(!isXml) frames = FlxAnimateFrames.fromAnimateAtlas(cast myData, img);
 		else frames = FlxAnimateFrames.fromSparrow(cast myData, img);
-		orgin = anim.curInstance.symbol.transformationPoint;
+		origin = anim.curInstance.symbol.transformationPoint;
 	}
 
 	function _removeBOM(str:String) //Removes BOM byte order indicator
