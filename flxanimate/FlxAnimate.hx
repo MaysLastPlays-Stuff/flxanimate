@@ -539,7 +539,7 @@ class FlxAnimate extends FlxSprite
 		var jsontxt:AnimAtlas = null;
 		if (haxe.io.Path.extension(Path) == "zip")
 		{
-			#if sys
+			#if desktop
 			var thing = Zip.readZip(sys.io.File.getBytes(Path));
 			#else
 			var thing = Zip.readZip(Assets.getBytes(Path));
@@ -559,7 +559,7 @@ class FlxAnimate extends FlxSprite
 		}
 		else
 		{
-			#if sys
+			#if desktop
 			jsontxt = haxe.Json.parse(sys.io.File.getContent('$Path/Animation.json'));
 			#else
 			jsontxt = haxe.Json.parse(openfl.Assets.getText('$Path/Animation.json'));
@@ -577,7 +577,11 @@ class FlxAnimate extends FlxSprite
 			var trimmed:String = pathOrStr.trim();
 			trimmed = trimmed.substr(trimmed.length - 5).toLowerCase();
 
+      #if desktop
 			if(trimmed == '.json') myJson = sys.io.File.getContent(myJson); //is a path
+			#else
+			if(trimmed == '.json') myJson = Assets.getText(myJson); //is a path
+			#end
 			animJson = cast haxe.Json.parse(_removeBOM(myJson));
 		}
 		else animJson = cast myJson;
@@ -590,12 +594,20 @@ class FlxAnimate extends FlxSprite
 
 		if(trimmed == '.json') //Path is json
 		{
+		  #if desktop
 			myData = sys.io.File.getContent(pathOrStr);
+			#else
+			myData = Assets.getText(pathOrStr);
+			#end
 			isXml = false;
 		}
 		else if (trimmed.substr(1) == '.xml') //Path is xml
 		{
+		  #if desktop
 			myData = sys.io.File.getContent(pathOrStr);
+			#else
+			myData = Assets.getText(pathOrStr);
+			#end
 			isXml = true;
 		}
 		myData = _removeBOM(myData);
@@ -625,7 +637,7 @@ class FlxAnimate extends FlxSprite
 		anim._loadAtlas(animJson);
 		if(!isXml) frames = FlxAnimateFrames.fromAnimateAtlas(cast myData, img);
 		else frames = FlxAnimateFrames.fromSparrow(cast myData, img);
-		origin = anim.curInstance.symbol.transformationPoint;
+		orgin = anim.curInstance.symbol.transformationPoint;
 	}
 
 	function _removeBOM(str:String) //Removes BOM byte order indicator
