@@ -98,7 +98,7 @@ class FlxAnimate extends FlxSprite
 
 	public function loadAtlas(Path:String)
 	{
-		if(haxe.io.Path.extension(Path) != "zip" && #if sys !sys.FileSystem.exists('$Path/Animation.json') #else !Assets.exists('$Path/Animation.json') #end )
+		if(haxe.io.Path.extension(Path) != "zip" && #if desktop !sys.FileSystem.exists('$Path/Animation.json') #else !Assets.exists('$Path/Animation.json') #end )
 		{
 			FlxG.log.error('Animation file not found in specified path: "$path", have you written the correct path?');
 			return;
